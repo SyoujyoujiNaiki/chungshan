@@ -1,5 +1,8 @@
 {
   "import": [
-    "username/hello/lib"
+    {
+      "path":"SyoujyoujiNaiki/chungshan/lib",
+      "alias": "chsh"
+    }
   ]
 }
