@@ -6,9 +6,9 @@ type! BytesLenErr Int derive(Show)
 /// # Example
 /// 
 /// ```
-/// uint64_number |> uint64_to_bytes_array
+/// uint64_number |> uint64_to_byte_array
 /// ```
-pub fn uint64_to_bytes_array(i : UInt64) -> FixedArray[Byte] {
+pub fn uint64_to_byte_array(i : UInt64) -> FixedArray[Byte] {
   let byte1 = i.to_byte()
   let byte2 = (i >> 8).to_byte()
   let byte3 = (i >> 16).to_byte()
@@ -26,9 +26,9 @@ pub fn uint64_to_bytes_array(i : UInt64) -> FixedArray[Byte] {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> bytes_array_to_uint64
+/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> byte_array_to_uint64
 /// ```
-pub fn bytes_array_to_uint64(bs : FixedArray[Byte]) -> UInt64!BytesLenErr {
+pub fn byte_array_to_uint64(bs : FixedArray[Byte]) -> UInt64!BytesLenErr {
   if bs.length() == 8 {
     let uint64_1 = bs[0].to_uint64()
     let uint64_2 = bs[1].to_uint64() << 8
@@ -57,9 +57,9 @@ pub fn bytes_array_to_uint64(bs : FixedArray[Byte]) -> UInt64!BytesLenErr {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> bytes_array_to_uint64_raw
+/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> byte_array_to_uint64_raw
 /// ```
-pub fn bytes_array_to_uint64_raw(bs : FixedArray[Byte]) -> UInt64 {
+pub fn byte_array_to_uint64_raw(bs : FixedArray[Byte]) -> UInt64 {
   let uint64_1 = bs[0].to_uint64()
   let uint64_2 = bs[1].to_uint64() << 8
   let uint64_3 = bs[2].to_uint64() << 16
@@ -83,9 +83,9 @@ pub fn bytes_array_to_uint64_raw(bs : FixedArray[Byte]) -> UInt64 {
 /// # Example
 /// 
 /// ```
-/// uint_number |> uint_to_bytes_array
+/// uint_number |> uint_to_byte_array
 /// ```
-pub fn uint_to_bytes_array(i : UInt) -> FixedArray[Byte] {
+pub fn uint_to_byte_array(i : UInt) -> FixedArray[Byte] {
   let byte1 = i.to_byte()
   let byte2 = (i >> 8).to_byte()
   let byte3 = (i >> 16).to_byte()
@@ -99,9 +99,9 @@ pub fn uint_to_bytes_array(i : UInt) -> FixedArray[Byte] {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> bytes_array_to_uint
+/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> byte_array_to_uint
 /// ```
-pub fn bytes_array_to_uint(bs : FixedArray[Byte]) -> UInt!BytesLenErr {
+pub fn byte_array_to_uint(bs : FixedArray[Byte]) -> UInt!BytesLenErr {
   if bs.length() == 4 {
     let uint64_1 = bs[0].to_uint()
     let uint64_2 = bs[1].to_uint() << 8
@@ -119,9 +119,9 @@ pub fn bytes_array_to_uint(bs : FixedArray[Byte]) -> UInt!BytesLenErr {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> bytes_array_to_uint_raw
+/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> byte_array_to_uint_raw
 /// ```
-pub fn bytes_array_to_uint_raw(bs : FixedArray[Byte]) -> UInt {
+pub fn byte_array_to_uint_raw(bs : FixedArray[Byte]) -> UInt {
   let uint64_1 = bs[0].to_uint()
   let uint64_2 = bs[1].to_uint() << 8
   let uint64_3 = bs[2].to_uint() << 16
@@ -134,10 +134,10 @@ pub fn bytes_array_to_uint_raw(bs : FixedArray[Byte]) -> UInt {
 /// # Example
 /// 
 /// ```
-/// double_number |> double_to_bytes_array
+/// double_number |> double_to_byte_array
 /// ```
-pub fn double_to_bytes_array(f : Double) -> FixedArray[Byte] {
-  f |> Double::reinterpret_as_uint64 |> uint64_to_bytes_array
+pub fn double_to_byte_array(f : Double) -> FixedArray[Byte] {
+  f |> Double::reinterpret_as_uint64 |> uint64_to_byte_array
 }
 
 ///| Convert a 8 bytes long FixedArray[Byte] into an Double **with* a length check.
@@ -146,11 +146,11 @@ pub fn double_to_bytes_array(f : Double) -> FixedArray[Byte] {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> bytes_array_to_double
+/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> byte_array_to_double
 /// ```
-pub fn bytes_array_to_double(bs : FixedArray[Byte]) -> Double!BytesLenErr {
+pub fn byte_array_to_double(bs : FixedArray[Byte]) -> Double!BytesLenErr {
   if bs.length() == 8 {
-    bs |> bytes_array_to_uint64_raw |> UInt64::reinterpret_as_double
+    bs |> byte_array_to_uint64_raw |> UInt64::reinterpret_as_double
   } else {
     raise BytesLenErr(bs.length())
   }
@@ -162,10 +162,10 @@ pub fn bytes_array_to_double(bs : FixedArray[Byte]) -> Double!BytesLenErr {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> bytes_array_to_double_raw
+/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> byte_array_to_double_raw
 /// ```
-pub fn bytes_array_to_double_raw(bs : FixedArray[Byte]) -> Double {
-  bs |> bytes_array_to_uint64_raw |> UInt64::reinterpret_as_double
+pub fn byte_array_to_double_raw(bs : FixedArray[Byte]) -> Double {
+  bs |> byte_array_to_uint64_raw |> UInt64::reinterpret_as_double
 }
 
 ///| Convert a Float into a 4 bytes long FixedArray[Byte]
@@ -173,10 +173,10 @@ pub fn bytes_array_to_double_raw(bs : FixedArray[Byte]) -> Double {
 /// # Example
 /// 
 /// ```
-/// float_number |> float_to_bytes_array
+/// float_number |> float_to_byte_array
 /// ```
-pub fn float_to_bytes_array(f : Float) -> FixedArray[Byte] {
-  f |> Float::reinterpret_as_uint |> uint_to_bytes_array
+pub fn float_to_byte_array(f : Float) -> FixedArray[Byte] {
+  f |> Float::reinterpret_as_uint |> uint_to_byte_array
 }
 
 ///| Convert a 4 bytes long FixedArray[Byte] into an Float **with** a length check.
@@ -185,11 +185,11 @@ pub fn float_to_bytes_array(f : Float) -> FixedArray[Byte] {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> bytes_array_to_float
+/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> byte_array_to_float
 /// ```
-pub fn bytes_array_to_float(bs : FixedArray[Byte]) -> Float!BytesLenErr {
+pub fn byte_array_to_float(bs : FixedArray[Byte]) -> Float!BytesLenErr {
   if bs.length() == 4 {
-    bs |> bytes_array_to_uint_raw |> UInt::reinterpret_as_float
+    bs |> byte_array_to_uint_raw |> UInt::reinterpret_as_float
   } else {
     raise BytesLenErr(bs.length())
   }
@@ -201,10 +201,10 @@ pub fn bytes_array_to_float(bs : FixedArray[Byte]) -> Float!BytesLenErr {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> bytes_array_to_float_raw
+/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> byte_array_to_float_raw
 /// ```
-pub fn bytes_array_to_float_raw(bs : FixedArray[Byte]) -> Float {
-  bs |> bytes_array_to_uint_raw |> UInt::reinterpret_as_float
+pub fn byte_array_to_float_raw(bs : FixedArray[Byte]) -> Float {
+  bs |> byte_array_to_uint_raw |> UInt::reinterpret_as_float
 }
 
 ///| Convert an Int into a 4 bytes long FixedArray[Byte].
@@ -212,10 +212,10 @@ pub fn bytes_array_to_float_raw(bs : FixedArray[Byte]) -> Float {
 /// # Example
 /// 
 /// ```
-/// int_number |> int_to_bytes_array
+/// int_number |> int_to_byte_array
 /// ```
-pub fn int_to_bytes_array(i : Int) -> FixedArray[Byte] {
-  i |> Int::reinterpret_as_uint |> uint_to_bytes_array
+pub fn int_to_byte_array(i : Int) -> FixedArray[Byte] {
+  i |> Int::reinterpret_as_uint |> uint_to_byte_array
 }
 
 ///| Convert a 4 bytes long FixedArray[Byte] into an Int **with** a length check.
@@ -224,11 +224,11 @@ pub fn int_to_bytes_array(i : Int) -> FixedArray[Byte] {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> bytes_array_to_int
+/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> byte_array_to_int
 /// ```
-pub fn bytes_array_to_int(bs : FixedArray[Byte]) -> Int!BytesLenErr {
+pub fn byte_array_to_int(bs : FixedArray[Byte]) -> Int!BytesLenErr {
   if bs.length() == 4 {
-    bs |> bytes_array_to_uint_raw |> UInt::reinterpret_as_int
+    bs |> byte_array_to_uint_raw |> UInt::reinterpret_as_int
   } else {
     raise BytesLenErr(bs.length())
   }
@@ -240,10 +240,10 @@ pub fn bytes_array_to_int(bs : FixedArray[Byte]) -> Int!BytesLenErr {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> bytes_array_to_int_raw
+/// [b'\x11', b'\x45', b'\x14', b'\x00'] |> byte_array_to_int_raw
 /// ```
-pub fn bytes_array_to_int_raw(bs : FixedArray[Byte]) -> Int {
-  bs |> bytes_array_to_uint_raw |> UInt::reinterpret_as_int
+pub fn byte_array_to_int_raw(bs : FixedArray[Byte]) -> Int {
+  bs |> byte_array_to_uint_raw |> UInt::reinterpret_as_int
 }
 
 ///| Convert an Int64 into a 8 bytes long FixedArray[Byte].
@@ -251,10 +251,10 @@ pub fn bytes_array_to_int_raw(bs : FixedArray[Byte]) -> Int {
 /// # Example
 /// 
 /// ```
-/// int64_number |> int64_to_bytes_array
+/// int64_number |> int64_to_byte_array
 /// ```
-pub fn int64_to_bytes_array(i : Int64) -> FixedArray[Byte] {
-  i |> Int64::reinterpret_as_uint64 |> uint64_to_bytes_array
+pub fn int64_to_byte_array(i : Int64) -> FixedArray[Byte] {
+  i |> Int64::reinterpret_as_uint64 |> uint64_to_byte_array
 }
 
 ///| Convert a 8 bytes long FixedArray[Byte] into an Int64 **with* a length check.
@@ -263,11 +263,11 @@ pub fn int64_to_bytes_array(i : Int64) -> FixedArray[Byte] {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> bytes_array_to_int64
+/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> byte_array_to_int64
 /// ```
-pub fn bytes_array_to_int64(bs : FixedArray[Byte]) -> Int64!BytesLenErr {
+pub fn byte_array_to_int64(bs : FixedArray[Byte]) -> Int64!BytesLenErr {
   if bs.length() == 8 {
-    bs |> bytes_array_to_uint64_raw |> UInt64::reinterpret_as_int64
+    bs |> byte_array_to_uint64_raw |> UInt64::reinterpret_as_int64
   } else {
     raise BytesLenErr(bs.length())
   }
@@ -279,8 +279,8 @@ pub fn bytes_array_to_int64(bs : FixedArray[Byte]) -> Int64!BytesLenErr {
 /// # Example
 /// 
 /// ```
-/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> bytes_array_to_int64_raw
+/// [b'\x11', b'\x45', b'\x14', b'\x19', b'\x19', b'\x81', b'\x00', b'\x00'] |> byte_array_to_int64_raw
 /// ```
-pub fn bytes_array_to_int64_raw(bs : FixedArray[Byte]) -> Int64 {
-  bs |> bytes_array_to_uint64_raw |> UInt64::reinterpret_as_int64
+pub fn byte_array_to_int64_raw(bs : FixedArray[Byte]) -> Int64 {
+  bs |> byte_array_to_uint64_raw |> UInt64::reinterpret_as_int64
 }
